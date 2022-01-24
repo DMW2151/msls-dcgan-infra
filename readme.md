@@ -3,16 +3,12 @@
 
 This repository contains the AWS infrastructure used to train [msls-dcgan](https://github.com/DMW2151/msls-pytorch-dcgan). Generally, the architecture can be described by the image below:
 
-<center>
-    <figure class="image">
-        <img alt="system-arch" src="./images/arch.png" height="auto" width="600">
-        <i><figcaption>Simplified System Architecture - DCGAN Training</figcaption></i>
-    </figure>
-</center>
+![msls-gan-architecture](images/arch.png)
+
+## Usage
 
 **N.B: This repo does not download (nor provision pipelines to download) MSLS data, you may access it from your own signed URL [here](https://www.mapillary.com/dataset/places).**
 
-## Usage
 
 If you're so inclined, you can replicate the full architecure by running `terraform apply` from this repository. However, there are dozens of resources deployed by this configuration and I suspect your time would be better served by simply cloning `msls-dcgan` to a standalone Sagemaker (Testing, `P2` or `P3`) or EC2 (`DL1`) instance.
 
