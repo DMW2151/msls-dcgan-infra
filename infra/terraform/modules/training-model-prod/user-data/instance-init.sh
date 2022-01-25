@@ -39,3 +39,7 @@ sudo mkdir -p /efs &&\
 
 sudo mount -t nfs4 \
     -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport ${nfs_mount_ip}:/ /efs
+
+# Squeezing a little performance - Increase the NFS Read-Ahead 
+# See: https://docs.aws.amazon.com/efs/latest/ug/performance-tips.html
+sudo bash -c "echo 15000 > /sys/class/bdi/0:$(stat -c '%d' efs)/read_ahead_kb"
