@@ -13,7 +13,8 @@ sudo mount -t nfs4 \
     -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport ${nfs_mount_ip}:/ /efs
 
 # Run TensorBoard
-docker run -ti \      
+docker run -ti \
+    --name tensorboard \
     -v /efs/trained_model:/tf_logs \
     -p 0.0.0.0:6006:6006 \
     tensorflow/tensorflow:latest /bin/bash -c "tensorboard --logdir tf_logs/"
