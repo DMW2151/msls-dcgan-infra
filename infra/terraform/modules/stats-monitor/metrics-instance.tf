@@ -24,7 +24,9 @@ resource "aws_instance" "metrics" {
   // and therefore no vars passed to template!
   iam_instance_profile = aws_iam_instance_profile.stats_instance_role.name
   user_data = templatefile(
-    "${path.module}/user-data/stats-instance-user-data.sh", {}
+    "${path.module}/user-data/stats-instance-user-data.sh", {
+      nfs_mount_ip = var.efs_mount_target.ip_address
+    }
   )
 
   // Storage - Minimal Storage Required for Instance - May change w. non-default AMI 

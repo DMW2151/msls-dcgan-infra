@@ -1,3 +1,11 @@
+variable "efs_mount_target" {
+  description = "Elastic Filesystem's *mount target* shared by training instances in VPC (full object)"
+  type = object({
+    id         = string
+    ip_address = string
+  })
+}
+
 variable "subnet_pvt" {
   description = "Private subnet in Core VPC (full object)"
   type = object({

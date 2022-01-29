@@ -35,7 +35,7 @@ I used Sagemaker Notebook instances to develop the model's core functionality an
 
 This module, `train-dev`, launches a Sagemaker Notebook instance into the VPC's private subnet, clones my model code from [Github](https://github.com/DMW2151/msls-pytorch-dcgan), and mounts the EFS volume to the instance. In the background, this instance is configured such that it's exporting GPU and memory statistics to CloudWatch.
 
-I was able to develop and test the model's functionality on `ml.p2.xlarge` (`$0.90/hr`) instances, however this instance type is not a reasonable comparison to the `DL1`. Instead, this module launches a `ml.p3.8xlarge` (`$12.45/hr`) notebook instance. Specific reasons for this choice in the context of the project are discussed in my main post.
+I was able to develop and test the model's functionality on `ml.p2.xlarge` (`$0.90/hr`) instances, however this instance type is not a reasonable comparison to the `DL1`. Instead, this module launches a `ml.p3.8xlarge` (`$12.45/hr`) notebook instance. Specific reasons for this choice in the context of the project are discussed in my [main post](https://dmw2151.com/trained-a-gan).
 
 Once in the Sagemaker console, the model can be trained by running the notebook `./models/gaudi_dcgan_nb.ipynb`.
 
@@ -72,7 +72,7 @@ python3 run_gaudi_dcgan.py \
 
 ### Grafana - Stats Monitor
 
-[Grafana](https://grafana.com/) is an open source analytics & monitoring solution that can be used to create charts from a variety of external data sources. A Grafana instance is not required to perform any model training or analysis, although many of the charts from my main post have been generated from the Grafana UI.
+[Grafana](https://grafana.com/) is an open source analytics & monitoring solution that can be used to create charts from a variety of external data sources. A Grafana instance is not required to perform any model training or analysis, although many of the charts from my [main post](https://dmw2151.com/trained-a-gan) have been generated from the Grafana UI.
 
 The module `stats-monitor` launches a Grafana instance in the core VPC and generates a `metrics_ip_addr`. Using this address and the `jump_ip_addr` from `mlcore`, a user can SSH tunnel the metrics instance UI to `localhost` with the following:
 

@@ -37,11 +37,11 @@ variable "allow_ml_core_sg" {
 variable "platform_identifier" {
   description = " (Required) The platform identifier of the notebook instance runtime environment. This value can be either notebook-al1-v1 or notebook-al2-v1"
   type        = string
-  default     = "notebook-al2-v1"
+  default     = "notebook-al1-v1"
 }
 
 variable "instance_type" {
   description = "(Required) The name of ML compute instance type (e.g. ml.p2.xlarge)."
   type        = string
-  default     = "ml.p3.2xlarge"
+  default     = "ml.p2.xlarge"
 }

@@ -9,7 +9,7 @@ sudo apt-get install -y \
     tmux \
     jq \
     nfs-common \
-    collectd \
+    collectd
 
 # Expect these to already be Available in the AMI's `pytorch_p38` environment,
 # but install them to the host's default environment too...

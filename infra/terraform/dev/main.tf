@@ -44,6 +44,7 @@ module "stats-monitor" {
   source               = "../modules/stats-monitor"
   ssh_keypair_name     = "public-jump-1"
   subnet_pvt           = module.mlcore.subnet_pvt
+  efs_mount_target     = module.mlcore.efs_mount_target
   allow_ml_core_sg     = module.mlcore.allow_ml_core_sg
   allow_ml_core_egress = module.mlcore.allow_ml_core_egress
 }
@@ -51,18 +52,18 @@ module "stats-monitor" {
 module "train-dev" {
   source               = "../modules/training-model-dev"
   subnet_pvt           = module.mlcore.subnet_pvt
-  allow_ml_core_sg     = module.mlcore.allow_ml_core_sg
   efs_mount_target     = module.mlcore.efs_mount_target
+  allow_ml_core_sg     = module.mlcore.allow_ml_core_sg
   allow_ml_core_egress = module.mlcore.allow_ml_core_egress
 }
 
-module "train-prod" {
-  source               = "../modules/training-model-prod"
-  ssh_keypair_name     = "public-jump-1"
-  subnet_pvt           = module.mlcore.subnet_pvt
-  allow_ml_core_sg     = module.mlcore.allow_ml_core_sg
-  efs_mount_target     = module.mlcore.efs_mount_target
-  allow_ml_core_egress = module.mlcore.allow_ml_core_egress
-}
+# module "train-prod" {
+#   source               = "../modules/training-model-prod"
+#   ssh_keypair_name     = "public-jump-1"
+#   subnet_pvt           = module.mlcore.subnet_pvt
+#   allow_ml_core_sg     = module.mlcore.allow_ml_core_sg
+#   efs_mount_target     = module.mlcore.efs_mount_target
+#   allow_ml_core_egress = module.mlcore.allow_ml_core_egress
+# }
 
 

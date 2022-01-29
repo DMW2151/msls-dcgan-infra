@@ -32,14 +32,24 @@ sudo mount -t nfs4 \
 
 # Squeezing a little performance - Increase the NFS Read-Ahead 
 # See: https://docs.aws.amazon.com/efs/latest/ug/performance-tips.html
-sudo bash -c "echo 15000 > /sys/class/bdi/0:$(stat -c '%d' efs)/read_ahead_kb"
+sudo bash -c "echo 15000 > /sys/class/bdi/0:$(stat -c '%d' /efs)/read_ahead_kb"
 
 # Enable GPU Monitor && Start in Background...
 sudo pip3 install \
     nvidia-ml-py \
     boto3 \
-    pynvml
-
+    pynvml \
+    theano 
+    
 sudo mkdir -p /home/ec2-user/tools/GPUMonitoring/ &&
     sudo curl -XGET https://s3.amazonaws.com/aws-bigdata-blog/artifacts/GPUMonitoring/gpumon.py > /home/ec2-user/tools/GPUMonitoring/gpumon.py &&\
     sudo python3 /home/ec2-user/tools/GPUCloudWatchMonitor/gpumon.py &
+
+# Install FFMPEG from Mirror
+sudo mkdir -p /usr/local/bin/ffmpeg &&\
+    cd /usr/local/bin/ffmpeg &&\
+    sudo wget https://www.johnvansickle.com/ffmpeg/old-releases/ffmpeg-4.2.1-amd64-static.tar.xz &&\
+    sudo tar xvf ffmpeg-4.2.1-amd64-static.tar.xz &&\
+    sudo mv ffmpeg-4.2.1-amd64-static/ffmpeg . &&\
+    sudo ln -s /usr/local/bin/ffmpeg/ffmpeg /usr/bin/ffmpeg
+
