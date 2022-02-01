@@ -6,7 +6,7 @@ resource "aws_instance" "metrics" {
   // General 
   // Defaults -> us-east-1; ubuntu 20.04; t3.nano
   ami           = var.statistics_ami
-  instance_type = "t3.small"
+  instance_type = "t3.medium"
 
   // Security + Networking
   subnet_id                   = var.subnet_pvt.id

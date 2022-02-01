@@ -8,15 +8,18 @@ sudo apt-get install -y \
     iotop \
     tmux \
     jq \
+    git \
     nfs-common \
-    collectd
+    collectd \
+    systat
 
 # Expect these to already be Available in the AMI's `pytorch_p38` environment,
 # but install them to the host's default environment too...
 sudo pip install \
     nvidia-ml-py \
     boto3 \
-    pynvml
+    pynvml \
+    tensorboard
 
 # Install Cloudwatch Agent - Assume not there Already
 curl -XGET https://s3.amazonaws.com/amazoncloudwatch-agent/ubuntu/amd64/latest/amazon-cloudwatch-agent.deb \
@@ -33,13 +36,18 @@ sudo mkdir -p /opt/aws/amazon-cloudwatch-agent/bin/ &&\
 sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl \
     -a fetch-config -m ec2 -s -c file:/opt/aws/amazon-cloudwatch-agent/bin/config.json
 
-# Mount Elastic Filesystem
+# Create EFS + EBS MountPoint
+sudo mkdir -p /data &&\
+    sudo chmod 777 /data
+
 sudo mkdir -p /efs &&\
     sudo chmod 777 /efs
 
-sudo mount -t nfs4 \
-    -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport ${nfs_mount_ip}:/ /efs
+# Mount Elastic Filesystem
+sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport ${nfs_mount_ip}:/ /efs
 
-# Squeezing a little performance - Increase the NFS Read-Ahead 
-# See: https://docs.aws.amazon.com/efs/latest/ug/performance-tips.html
-sudo bash -c "echo 15000 > /sys/class/bdi/0:$(stat -c '%d' efs)/read_ahead_kb"
+# Mount EBS -> Assumes Already Formatted 
+sudo mount -t ext4 /dev/xvdh /data
+
+# Clone Repo
+cd /home/ubuntu && git clone https://github.com/DMW2151/msls-pytorch-dcgan.git

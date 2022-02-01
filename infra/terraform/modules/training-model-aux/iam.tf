@@ -24,6 +24,6 @@ resource "aws_iam_role" "sagemaker_nb_role" {
     "arn:aws:iam::aws:policy/AmazonSageMakerFullAccess",
     "arn:aws:iam::aws:policy/AmazonS3FullAccess",
     "arn:aws:iam::aws:policy/AmazonSSMReadOnlyAccess",
-    "arn:aws:iam::aws:policy/CloudWatchAgentAdminPolicy",
+    "arn:aws:iam::aws:policy/CloudWatchFullAccess",
   ]
 }

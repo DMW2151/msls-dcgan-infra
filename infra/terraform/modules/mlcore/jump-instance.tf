@@ -16,7 +16,8 @@ resource "aws_instance" "jump" {
   associate_public_ip_address = true
   vpc_security_group_ids = [
     aws_security_group.allow_ml_core_vpc.id,
-    aws_security_group.allow_deployer_sg.id
+    aws_security_group.allow_deployer_sg.id,
+    aws_security_group.allow_egress.id
   ]
 
   // SSH

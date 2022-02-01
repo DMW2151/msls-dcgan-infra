@@ -8,7 +8,7 @@ resource "aws_instance" "worker" {
   //
   // Defaults -> us-east-1; ubuntu 18.04 DL AMI w. Habana; DL1.24xLarge...
   ami           = var.worker_ami
-  instance_type = "dl1.24xlarge"
+  instance_type = var.worker_instance_type
 
   // Security + Networking
   subnet_id                   = var.subnet_pvt.id
@@ -40,10 +40,35 @@ resource "aws_instance" "worker" {
     }
   )
 
-
   // Tags
   tags = {
     Name = "ML Core - Worker Instance"
   }
 
+}
+
+// Resource: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ebs_volume
+resource "aws_ebs_volume" "msls" {
+
+  // General
+  type              = "gp3"
+  size              = 50
+  iops              = 8000
+  throughput        = 1000
+  availability_zone = var.subnet_pvt.availability_zone
+
+  // Tags
+  tags = {
+    Name = "MSLS Volume"
+  }
+
+}
+
+// Resource: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/volume_attachment
+resource "aws_volume_attachment" "worker" {
+
+  // General
+  device_name = "/dev/sdh"
+  volume_id   = aws_ebs_volume.msls.id
+  instance_id = aws_instance.worker.id
 }

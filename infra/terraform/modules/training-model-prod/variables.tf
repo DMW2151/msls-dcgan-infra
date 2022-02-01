@@ -43,5 +43,11 @@ variable "ssh_keypair_name" {
 variable "worker_ami" {
   type        = string
   description = "AMI ID for worker instance; use `aws ec2 describe images` to locate an acceptable AMI"
-  default     = "ami-0cf1d34c09c83dc91" // DL1 in US-EAST-1
+  default     = "ami-0cf1d34c09c83dc91" // DL1 in US-EAST-1 (ami-0cf1d34c09c83dc91)
+}
+
+variable "worker_instance_type" {
+  type        = string
+  description = "Instance type for worker; either DL1 or P class."
+  default     = "p3.2xlarge"
 }
