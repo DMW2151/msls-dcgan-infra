@@ -9,9 +9,11 @@ sudo apt-get install -y \
     tmux \
     jq \
     git \
+    atop \
     nfs-common \
     collectd \
-    systat
+    sysstat
+
 
 # Expect these to already be Available in the AMI's `pytorch_p38` environment,
 # but install them to the host's default environment too...
@@ -21,7 +23,7 @@ sudo pip install \
     pynvml \
     tensorboard
 
-# Install Cloudwatch Agent - Assume not there Already
+# Install Cloudwatch Agent  && set to run on startup
 curl -XGET https://s3.amazonaws.com/amazoncloudwatch-agent/ubuntu/amd64/latest/amazon-cloudwatch-agent.deb \
     --output amazon-cloudwatch-agent.deb && \
 sudo dpkg -i -E ./amazon-cloudwatch-agent.deb
@@ -36,6 +38,10 @@ sudo mkdir -p /opt/aws/amazon-cloudwatch-agent/bin/ &&\
 sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl \
     -a fetch-config -m ec2 -s -c file:/opt/aws/amazon-cloudwatch-agent/bin/config.json
 
+# Enable GPU Monitor and Set to Run on Startup
+python3 ~/tools/GPUCloudWatchMonitor/gpumon.py &
+
+
 # Create EFS + EBS MountPoint
 sudo mkdir -p /data &&\
     sudo chmod 777 /data
@@ -46,7 +52,7 @@ sudo mkdir -p /efs &&\
 # Mount Elastic Filesystem
 sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport ${nfs_mount_ip}:/ /efs
 
-# Mount EBS -> Assumes Already Formatted 
+# Mount EBS -> Assumes Already Formatted; DO NOT FORMAT on Instance Up!
 sudo mount -t ext4 /dev/xvdh /data
 
 # Clone Repo

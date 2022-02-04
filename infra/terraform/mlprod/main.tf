@@ -68,7 +68,7 @@ module "train-prod" {
   efs_mount_target     = module.mlcore.efs_mount_target
   allow_ml_core_egress = module.mlcore.allow_ml_core_egress
   worker_ami           = "ami-083abc80c473f5d88" // (Deep Learn AMI Gaudi: `ami-0cf1d34c09c83dc91` No-Gaudi: `ami-083abc80c473f5d88`)
-  worker_instance_type = "p2.xlarge"             // dl1.24xlarge, p3.2xlarge, p3.8xlarge, or g4dn.12xlarge
+  worker_instance_type = "p2.8xlarge"             // dl1.24xlarge, p3.2xlarge, p3.8xlarge,
 }
 
 
