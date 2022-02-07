@@ -57,6 +57,7 @@ module "train-aux" {
   efs_mount_target     = module.mlcore.efs_mount_target
   allow_ml_core_sg     = module.mlcore.allow_ml_core_sg
   allow_ml_core_egress = module.mlcore.allow_ml_core_egress
+  instance_type        = "ml.t3.large"
 }
 
 // *The* Training Instance - Runs DLAMI or Habana DLAMI
@@ -67,8 +68,8 @@ module "train-prod" {
   allow_ml_core_sg     = module.mlcore.allow_ml_core_sg
   efs_mount_target     = module.mlcore.efs_mount_target
   allow_ml_core_egress = module.mlcore.allow_ml_core_egress
-  worker_ami           = "ami-083abc80c473f5d88" // (Deep Learn AMI Gaudi: `ami-0cf1d34c09c83dc91` No-Gaudi: `ami-083abc80c473f5d88`)
-  worker_instance_type = "p2.8xlarge"             // dl1.24xlarge, p3.2xlarge, p3.8xlarge,
+  worker_ami           = "ami-083abc80c473f5d88" // (Deep Learn AMI Gaudi: `ami-072b8fb6c66269b96` No-Gaudi: `ami-083abc80c473f5d88`)
+  worker_instance_type = "p2.xlarge"       // dl1.24xlarge, p2.xlarge, p3.8xlarge,
 }
 
 
