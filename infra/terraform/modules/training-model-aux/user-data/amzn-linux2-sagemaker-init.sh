@@ -4,24 +4,13 @@
 # data and images back and forth too much...
 
 sudo yum install epel-release -y &&\
-sudo yum update -y
+    sudo yum update -y
 
 sudo yum install -y \
-    amazon-cloudwatch-agent \
     nfs-utils \
     htop \
     iotop 
-
-sudo amazon-linux-extras install -y \
-    collectd
-
-# Enable GPU Monitor && Start in Background...
-sudo pip3 install \
-    nvidia-ml-py \
-    boto3 \
-    pynvml \
-    theano 
-
+    
 # Install FFMPEG from Mirror
 sudo mkdir -p /usr/local/bin/ffmpeg &&\
     cd /usr/local/bin/ffmpeg &&\
