@@ -12,3 +12,8 @@ output "worker_ip_addr" {
   description = "Internal IP address of the VPC's worker instance. Deployer can SSH tunnel into this instance via jump."
   value       = module.train-prod.worker_ip_addr
 }
+
+output "api_ip_addr" {
+  description = "Internal IP address of the VPC's worker instance. Deployer can SSH tunnel into this instance via jump."
+  value       = module.imgs-api.api_ip_addr
+}

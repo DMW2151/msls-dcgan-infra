@@ -12,6 +12,11 @@ output "subnet_pub" {
   value       = aws_subnet.subnet_pub
 }
 
+output "subnet_pub_2" {
+  description = "Public subnet in core VPC (full object)"
+  value       = aws_subnet.subnet_pub_2
+}
+
 output "subnet_pvt" {
   description = "Private subnet in Core VPC (full object)"
   value       = aws_subnet.subnet_pvt

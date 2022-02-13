@@ -49,6 +49,17 @@ module "stats-monitor" {
   allow_ml_core_egress = module.mlcore.allow_ml_core_egress
 }
 
+module "imgs-api" {
+  source               = "../modules/api"
+  ssh_keypair_name     = "public-jump-1"
+  subnet_pvt           = module.mlcore.subnet_pvt
+  subnet_pub           = module.mlcore.subnet_pub
+  subnet_pub_2         = module.mlcore.subnet_pub_2
+  efs_mount_target     = module.mlcore.efs_mount_target
+  allow_ml_core_sg     = module.mlcore.allow_ml_core_sg
+  allow_ml_core_egress = module.mlcore.allow_ml_core_egress
+}
+
 // Module: Creates a Sagemaker notebook for Plotting Model Metrics; Useful to have
 // a UI and a standardized GPU...
 module "train-aux" {

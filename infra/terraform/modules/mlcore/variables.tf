@@ -4,6 +4,12 @@ variable "az" {
   default     = "us-east-1a"
 }
 
+variable "az_2" {
+  type        = string
+  description = "Availability zone to deploy resources into (full slug, e.g. us-east-1b)"
+  default     = "us-east-1b"
+}
+
 // This AMI can be looked-Up in a given region with the following CLI command:
 //   aws ec2 describe-images \
 //      --region us-east-1 \

@@ -17,6 +17,21 @@ resource "aws_subnet" "subnet_pub" {
 
 }
 
+resource "aws_subnet" "subnet_pub_2" {
+
+  // General
+  vpc_id                  = aws_vpc.core.id
+  cidr_block              = cidrsubnet(aws_vpc.core.cidr_block, 4, 3)
+  availability_zone       = var.az_2
+  map_public_ip_on_launch = true
+
+  // Tags
+  tags = {
+    Name = "gaudi_ml_core_pub_2"
+  }
+
+}
+
 // Resource: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet
 resource "aws_subnet" "subnet_pvt" {
 
