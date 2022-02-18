@@ -68,8 +68,7 @@ variable "ssh_keypair_name" {
 //
 // Defaults to the AMI of Ubuntu 20.04 in US-EAST-1
 //
-
-variable "statistics_ami" {
+variable "api_ami" {
   type        = string
   description = "AMI ID for metrics instance; use `aws ec2 describe images` to locate an acceptable AMI"
   default     = "ami-083654bd07b5da81d"

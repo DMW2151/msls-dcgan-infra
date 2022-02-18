@@ -1,8 +1,5 @@
-data "aws_route53_zone" "dmw" {
-  name         = "dmw2151.com"
-  private_zone = false
-}
-
+// NOTE: This isn't so smooth because of ACM validation, but the name will still get added to the route
+// Resource: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record
 resource "aws_route53_record" "api" {
   zone_id = data.aws_route53_zone.dmw.zone_id
   name    = "api"
@@ -13,9 +10,3 @@ resource "aws_route53_record" "api" {
     ]
 }
 
-// FootGun -> Need to Manually Create These Records, Blegh
-data "aws_acm_certificate" "dmw" {
-  domain       = "api.dmw2151.com"
-  types       = ["AMAZON_ISSUED"]
-  most_recent = true
-}

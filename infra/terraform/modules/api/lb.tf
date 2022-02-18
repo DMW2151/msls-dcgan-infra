@@ -37,6 +37,7 @@ resource "aws_lb" "model_alb" {
 
 }
 
+// Resource: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group 
 resource "aws_security_group" "model_lb_sg" {
 
   // General
@@ -79,18 +80,6 @@ resource "aws_security_group" "model_lb_sg" {
 
 }
 
-// Kinda Lazy...
-// Resource: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/vpc
-data "aws_vpc" "ml_vpc" {
-
-  filter {
-    name   = "tag:Name"
-    values = [
-      "gaudi_ml_core_vpc"
-    ]
-  }
-
-}
 
 // Resource: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resource/lb_target_group
 resource "aws_lb_target_group" "model" {

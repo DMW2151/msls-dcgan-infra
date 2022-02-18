@@ -1,7 +1,6 @@
 #! /bin/bash
 
-# Assume we're running on the AWS Deep-Learning AMI on Ubuntu-18.04, the underlying instance 
-# type should change between (p3.2xlarge, dl1.24xlarge)
+# Assume we're running on the AWS Deep-Learning AMI on Ubuntu-18.04
 
 # Install Apt Utils for Instance
 sudo apt-get install -y \
@@ -14,7 +13,6 @@ sudo apt-get install -y \
     collectd \
     sysstat \
     lsblk 
-
 
 # Expect these to already be Available in the AMI's `pytorch_p38` environment,
 # but install them to the host's default environment too...
@@ -43,22 +41,15 @@ sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl \
 # Enable GPU Monitor and Set to Run on Startup
 python3 ~/tools/GPUCloudWatchMonitor/gpumon.py &
 
-# Create EFS + EBS MountPoint
+# Create EBS + EFS MountPoint
 sudo mkdir -p /data &&\
-    sudo chmod 777 /data
+    sudo chmod 777 /data &&\
+    sudo mount -t ext4 /dev/xvdh /data
 
 sudo mkdir -p /efs &&\
-    sudo chmod 777 /efs
+    sudo chmod 777 /efs &&\
+    sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport ${nfs_mount_ip}:/ /efs
 
-# Mount Elastic Filesystem
-sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport ${nfs_mount_ip}:/ /efs
-
-# Mount EBS -> Assumes Already Formatted; DO NOT FORMAT on Instance Up!
-sudo mount -t ext4 /dev/xvdh /data
-
-# OR Mount to other place...
-sudo mkdir -p /ebs &&\
-    sudo mount -t ext4 /dev/nvme1n1 /ebs  
  
 # Clone Repo
 cd /home/ubuntu && git clone https://github.com/DMW2151/msls-pytorch-dcgan.git

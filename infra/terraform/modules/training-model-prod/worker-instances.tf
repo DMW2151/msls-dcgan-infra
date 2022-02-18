@@ -34,7 +34,7 @@ resource "aws_instance" "worker" {
   // Instance Configuration...
   iam_instance_profile = aws_iam_instance_profile.worker.name
   user_data = templatefile(
-    "${path.module}/user-data/instance-init.sh",
+    (var.worker_instance_type == "dl.24xlarge") ? "${path.module}/user-data/habana-instance-init.sh" : "${path.module}/user-data/instance-init.sh", 
     {
       nfs_mount_ip = var.efs_mount_target.ip_address
     }

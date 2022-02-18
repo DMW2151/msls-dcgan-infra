@@ -49,6 +49,7 @@ module "stats-monitor" {
   allow_ml_core_egress = module.mlcore.allow_ml_core_egress
 }
 
+// Module: Creates a small instance for serving the model's generated images
 module "imgs-api" {
   source               = "../modules/api"
   ssh_keypair_name     = "public-jump-1"
@@ -71,7 +72,7 @@ module "train-aux" {
   instance_type        = "ml.t3.large"
 }
 
-// *The* Training Instance - Runs DLAMI or Habana DLAMI
+// Module: Run *The* Training Instance - Runs DLAMI or Habana DLAMI
 module "train-prod" {
   source               = "../modules/training-model-prod"
   ssh_keypair_name     = "public-jump-1"
@@ -79,8 +80,8 @@ module "train-prod" {
   allow_ml_core_sg     = module.mlcore.allow_ml_core_sg
   efs_mount_target     = module.mlcore.efs_mount_target
   allow_ml_core_egress = module.mlcore.allow_ml_core_egress
-  worker_ami           = "ami-083abc80c473f5d88" // (Deep Learn AMI Gaudi: `ami-072b8fb6c66269b96` No-Gaudi: `ami-083abc80c473f5d88`)
-  worker_instance_type = "p2.xlarge"       // dl1.24xlarge, p2.xlarge, p3.8xlarge,
+  worker_ami           = "ami-055f042dfbbbd5be1" // (Deep Learn AMI Gaudi: `ami-055f042dfbbbd5be1` No-Gaudi: `ami-083abc80c473f5d88`)
+  worker_instance_type = "dl1.24xlarge"       // dl1.24xlarge OR p3.8xlarge,
 }
 
 
