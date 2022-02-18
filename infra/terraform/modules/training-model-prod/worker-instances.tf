@@ -68,7 +68,7 @@ resource "aws_ebs_volume" "msls" {
 resource "aws_volume_attachment" "worker" {
 
   // General
-  device_name = "/dev/sdh"   # OR: "/dev/sdh"
+  device_name = "/dev/sdh" 
   volume_id   = aws_ebs_volume.msls.id
   instance_id = aws_instance.worker.id
 }
