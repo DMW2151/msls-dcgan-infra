@@ -1,7 +1,7 @@
 #! /bin/sh
 
 # Create an instance running Tensorboard and Grafana in containers; both exposed within the VPC
-# include a few utils from apt
+# include a few utils from apt...
 sudo apt-get update -y &&\
     sudo apt-get install -y \
     docker \
@@ -23,7 +23,6 @@ sudo docker run -d \
     --restart always \
     -v /efs/trained_model:/tf_logs:ro \
     tensorflow/tensorflow:latest /bin/bash -c "pip3 install -U tensorboard-plugin-profile torch_tb_profiler && tensorboard --bind_all --logdir /tf_logs/"
-
 
 # Run Grafana - This version, 7.0.0, is the first on Ubuntu LTS 20.04 should be similar to prior or subsequent versions
 # See Instructions on Startup: https://community.grafana.com/t/data-source-on-startup/8618
