@@ -80,8 +80,8 @@ module "train-prod" {
   allow_ml_core_sg     = module.mlcore.allow_ml_core_sg
   efs_mount_target     = module.mlcore.efs_mount_target
   allow_ml_core_egress = module.mlcore.allow_ml_core_egress
-  worker_ami           = "ami-083abc80c473f5d88" // (Deep Learn AMI Gaudi: `ami-055f042dfbbbd5be1` No-Gaudi: `ami-083abc80c473f5d88`)
-  worker_instance_type = "p3.8xlarge"       // dl1.24xlarge OR p3.8xlarge,
+  worker_ami           = "ami-055f042dfbbbd5be1" // (Deep Learn AMI Gaudi: `ami-055f042dfbbbd5be1` No-Gaudi: `ami-083abc80c473f5d88`)
+  worker_instance_type = "dl1.24xlarge"       // dl1.24xlarge OR p3.8xlarge for dev,
 }
 
 
